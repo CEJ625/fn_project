@@ -34,9 +34,8 @@ FD_SET() 함수로 읽어들인 파일 디스크립터 중 listen_sock에 해당
 참여자 수 만큼 for문을 통해 FD_SET()함수로 읽어온 파일 스크립터 주소를 채팅에 참가한 참여자를 소켓 목록(clisock_list)에 추가한다<br/>
 관리하는 파일의 최대 개수(max_fdp)는 채팅 하는 동안 계속 재 계산된다. 파일의 개수는 최대 파일 지정 번호 + 1로 지정함 <br/> 
 !!!!!!!!이부분 좀 설명 미흡함 <br/> 
-select()함수로 변화가 있는 파일 디스크립터는 반환한다. <br/>만약 최대 파일 디스크립터 범위내에 검색한 fd가 0이하라면 select에 실패한것이다 <br/>
-FD_ISSET(listen_sock, &read_fds) -> 읽기 전용 소켓중 소켓 listen_sock에 해당하는 비트가 set되어 있으면 listen_sock을 반환한다 
-
+select()함수로 변화가 있는 파일 디스크립터는 반환한다. <br/>만약 최대 파일 디스크립터 범위내에 검색한 fd가 0이하(변화 없음)라면 select에 실패한것이다 <br/>
+만약 FD_ISSET(listen_sock, &read_fds) -> 읽어온 파일 디스크립터 중 소켓 listen_sock에 해당하는 비트가 set되어 있으면 해당 listen_sock을 반환한다 <br/>
 
 #### 3. chat_serv 소켓 생성 및 읽기 
 <img width="416" alt="서버분석5" src="https://user-images.githubusercontent.com/80368992/122089826-1fb43800-ce42-11eb-9750-f5fa6a34d9f4.PNG"><br/>
