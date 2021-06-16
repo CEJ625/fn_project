@@ -22,11 +22,11 @@ pthread_t a_thread -> 클라이언트 스레드용 구조체 정의<br/><br/>
 argc 인자값이 2개가 아닌경우 서버 사용법을 알려준다 <br/>
 main(int argc, char *argv[]) -> argc는 사용자가 입력한 인자값의 개수, *argv[]는 사용자가 입력한 문자열을 말한다 <br/><br/>이제 클라이언트와 연결하기 위해 소켓을 생성하고 읽어들이는 메서드인 tcp_listen(host, port, backlog)함수를 호출한다. [tct_listen함수](https://user-images.githubusercontent.com/80368992/122089826-1fb43800-ce42-11eb-9750-f5fa6a34d9f4.PNG)<br/>호출하고 반환된 소켓 값을 listen_Sock에 저장한다. <br/><br/>
 pthread_create -> 스레드를 생성한다 <br/>
-#### pthread_create(&a_thread, null, thread_function,(void *)null) <br/>
+* pthread_create(&a_thread, null, thread_function,(void *)null) <br/>
 pthread_create(생성되는 스레드의 번호를 받을 변수, 스레드 속성, 스레드가 생성되면서 실행할 변수, 실행할 함수에 들어갈 변수)<br/><br/>
-#### FD_ZERO, FD_SET 함수는 둘다 자신이 체크하고 싶은 소켓을 그룹에 포함시킨 후에 select 함수를 사용해야 한다.<br/><br/> 
-#### fd_set은 파일 디스크립터 번호를 배열로 가지는 '비트 필드'구조체이다. <br/>
-#### select()는 입출력 다중화 구현이 가능하며 지정한 범위의 fd중 FD_SET으로 1로 set되어 있는 파일을 순회하면서 변화가 있는 fd를 반환한다. <br/>
+* FD_ZERO, FD_SET 함수는 둘다 자신이 체크하고 싶은 소켓을 그룹에 포함시킨 후에 select 함수를 사용해야 한다.<br/><br/> 
+* fd_set은 파일 디스크립터 번호를 배열로 가지는 '비트 필드'구조체이다. <br/>
+* select()는 입출력 다중화 구현이 가능하며 지정한 범위의 fd중 FD_SET으로 1로 set되어 있는 파일을 순회하면서 변화가 있는 fd를 반환한다. <br/>
 
 FD_ZERO()함수로 read_fds의 메모리를 모두 초기화한다<br/>
 FD_SET() 함수로 읽어들인 파일 디스크립터 중 listen_sock에 해당하는 비트를 1로 하고<br/>
