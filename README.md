@@ -13,15 +13,26 @@ strcmp() 함수를 사용해  읽어들인 문자열과 두 문자열이 같은�
 #### 2. chat_serv 서버 메인 
 <img width="477" alt="서버분석3" src="https://user-images.githubusercontent.com/80368992/122089807-1aef8400-ce42-11eb-8ec4-a65160917c3c.PNG"><br/>
 sockeraddr_in 소켓 주소 구조체의 cliaddr -> 클라이언트 주소 구조체 정의<br/>
-buf[MAXLINE + 1] -> 클라이언트에서 받은 메시지<br/>
-fd_set read_fds -> 읽기를 감지할 fd_set 구조체 정의<br/>
-pthread_t a_thread -> 클라이언트 스레드용 구조체 정의<br/>
+buf[MAXLINE + 1] -> 클라이언트에서 받은 메시지<br/><br/>
+fd_set read_fds -> 읽기를 감지할 fd_set 구조체 정의, fd_set read_fds ; 와 같이 선언만 하고 안에 배열값을 찍어보면 쓰레기값이 있을 수 있다. 따라서 구조체를 초기화 해야 하며 밑에서 해줄 것이다. <br/> 
+pthread_t a_thread -> 클라이언트 스레드용 구조체 정의<br/><br/>
 argc 인자값이 2개가 아닌경우 서버 사용법을 알려준다 <br/>
 main(int argc, char *argv[]) -> argc는 사용자가 입력한 인자값의 개수, *argv[]는 사용자가 입력한 문자열을 말한다 <br/><br/>이제 클라이언트와 연결하기 위해 소켓을 생성하고 읽어들이는 메서드인 tcp_listen(host, port, backlog)함수를 호출한다.<br/><br/>
 pthread_create -> 스레드를 생성한다 <br/>
-###### pthread_create(&a_thread, null, thread_function,(void *)null) <br/>
-pthread_create(생성되는 스레드의 번호를 받을 변수, 스레드 속성, 스레드가 생성되면서 실행할 변수, 실행할 함수에 들어갈 변수)<br/>
-참여자 수 만큼 for문을 통해 FD_SET()함수로 읽어온 파일스크립터를 채팅에 참가한 참여자를 소켓 목록(clisock_list)에 추가한다 
+#### pthread_create(&a_thread, null, thread_function,(void *)null) <br/>
+pthread_create(생성되는 스레드의 번호를 받을 변수, 스레드 속성, 스레드가 생성되면서 실행할 변수, 실행할 함수에 들어갈 변수)<br/><br/>
+#### FD_ZERO, FD_SET 함수는 둘다 자신이 체크하고 싶은 소켓을 그룹에 포함시킨 후에 select 함수를 사용해야 한다.<br/><br/> 
+#### fd_set은 파일 디스크립터 번호를 배열로 가지는 '비트 필드'구조체이다. select()는 fd_set을 순회하며, fd_set값이 1인 파일에 대해 읽기 또는 쓰기를 검사하고 변화가 생긴 fd_set을 1로 한다.<br/>
+
+FD_ZERO()함수로 read_fds의 메모리를 모두 초기화한다<br/>
+FD_SET() 함수로 읽어들인 파일 디스크립터 주소에  listen_sock을 넣는다<br/>
+
+참여자 수 만큼 for문을 통해 FD_SET()함수로 읽어온 read_fds중 listen_sock에 해당하는 비트를 1로 하고 <br/>
+파일스크립터 주소에 채팅에 참가한 참여자를 소켓 목록(clisock_list)에 추가한다<br/>참여자가 늘어날 때 마다 max_fdp는 get_max()함수를 통해 참여자 수와 관련된 변수들을 재 계산한다.<br/>
+select()함수로 변화가 있는 파일 디스크립터는 반환한다. <br/>만약 검색한 fd가 0이하라면 select에 실패한것이다<br/>
+FD_ISSET(listen_sock, &read_fds) -> 읽기 전용 소켓중 소켓 listen_sock에 해당하는 비트가 set되어 있으면 listen_sock을 반환한다 
+
+
 #### 3. chat_serv 소켓 생성 및 읽기 
 <img width="416" alt="서버분석5" src="https://user-images.githubusercontent.com/80368992/122089826-1fb43800-ce42-11eb-9750-f5fa6a34d9f4.PNG"><br/>
 
