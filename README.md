@@ -4,15 +4,19 @@
 
 
 > 서버 코드 설명.
-#### 1. chat_serv 변수선언 
-<img width="310" alt="서버분석1" src="https://user-images.githubusercontent.com/80368992/122088213-7fa9df00-ce40-11eb-8cfc-5e9663cc0ab1.PNG">
+#### 1. chat_serv 멀티스레드 명령어
+<img width="469" alt="서버분석2" src="https://user-images.githubusercontent.com/80368992/122089512-cb10bd00-ce41-11eb-9876-571d5f69699d.PNG"><br/>
+서버에게 제공되는 명령어 (도움말, 참가자 수, 채팅 수, 참가자 ip목록, 나가기) 목록이 있음<br/>
+fgets()함수를 통해 스트링을 읽는다 <br/><br/>
 
-#### 2. chat_serv 서버 제공 멀티스레드 명령어
-<img width="469" alt="서버분석2" src="https://user-images.githubusercontent.com/80368992/122089512-cb10bd00-ce41-11eb-9876-571d5f69699d.PNG">
-
-#### 3. chat_serv 서버 메인 
-<img width="477" alt="서버분석3" src="https://user-images.githubusercontent.com/80368992/122089807-1aef8400-ce42-11eb-8ec4-a65160917c3c.PNG">
-
+#### 2. chat_serv 서버 메인 
+<img width="477" alt="서버분석3" src="https://user-images.githubusercontent.com/80368992/122089807-1aef8400-ce42-11eb-8ec4-a65160917c3c.PNG"><br/>
+sockeraddr_in 소켓 주소 구조체의 cliaddr -> 클라이언트 주소 구조체 정의<br/>
+buf[MAXLINE + 1] -> 클라이언트에서 받은 메시지<br/>
+fd_set read_fds -> 읽기를 감지할 fd_set 구조체 정의<br/>
+pthread_t a_thread -> 클라이언트 스레드용 구조체 정의<br/>
+argc 인자값이 2개가 아닌경우 서버 사용법을 알려준다 <br/>
+main(int argc, char *argv[]) -> argc는 사용자가 입력한 인자값의 개수, *argv[]는 사용자가 입력한 문자열을 말한다 <br/>
 #### 4. chat_serv 참여자 추가 및 참여자 탈퇴 처리 
 <img width="404" alt="서버분석4" src="https://user-images.githubusercontent.com/80368992/122089816-1d51de00-ce42-11eb-8e71-df7a5f70a5d1.PNG">
 
