@@ -144,16 +144,21 @@ select() 함수를 통해 fd중 fd_set으로 1로 set되어 있는 파일을 순
 > 실행 
 
 #### 1. 클라이언트와 서버 통신 성공 (클라이언트)
-<img width="278" alt="클라이언트사용방법" src="https://user-images.githubusercontent.com/80368992/122092199-9d794300-ce44-11eb-8ddd-cf996f5c0648.PNG">
+<img width="278" alt="클라이언트사용방법" src="https://user-images.githubusercontent.com/80368992/122092199-9d794300-ce44-11eb-8ddd-cf996f5c0648.PNG"><br/>
+클라이언트 1.meow 2.bullet 3.jeff 서버와 연결 성공 -> 클라이언트 측에 환영 메시지 출력<br/>
 
 #### 2. 클라이언트와 서버 통신 성공 (서버)
-<img width="367" alt="클라이언트연결완료시서버측" src="https://user-images.githubusercontent.com/80368992/122092204-9eaa7000-ce44-11eb-8c90-bb5d015267ed.PNG">
+<img width="367" alt="클라이언트연결완료시서버측" src="https://user-images.githubusercontent.com/80368992/122092204-9eaa7000-ce44-11eb-8c90-bb5d015267ed.PNG"><br/>
+클라이언트 1.meow 2.bullet 3.jeff 서버와 연결 성공 -> 서버 지원 명령어 목록, 현재 참가 수를 출력<br/>
 
 #### 3. 클라이언트 측 채팅결과 
-<img width="315" alt="참여자모두에게채팅방송" src="https://user-images.githubusercontent.com/80368992/122092676-2a240100-ce45-11eb-9737-610a8fbfb5b0.PNG">
+<img width="315" alt="참여자모두에게채팅방송" src="https://user-images.githubusercontent.com/80368992/122092676-2a240100-ce45-11eb-9737-610a8fbfb5b0.PNG"><br/>
+자신의 메시지, 다른 클라이언트의 메시지를 모두 읽을 수 있음<br/>
 
 #### 4. 서버 측 채팅결과
-<img width="306" alt="서버측참여자들의대화" src="https://user-images.githubusercontent.com/80368992/122092768-458f0c00-ce45-11eb-8e0c-f6a6caa28305.PNG">
+<img width="306" alt="서버측참여자들의대화" src="https://user-images.githubusercontent.com/80368992/122092768-458f0c00-ce45-11eb-8e0c-f6a6caa28305.PNG"><br/><br/>
 
 
-<br/><br/><br/>## 아쉬운 
+## 아쉬운 점 <br/>
+현재 구현한 채팅 프로그램에 대해서 기간적인 면에서나 본인의 코딩 능력으로썬 최선을 다해 여러 자료를 참고하고 이해하면서 프로그램을 구현했기에 아쉬운 것은 그닥 없었던 것 같지만.. <br/>
+그래도 제일 아쉬운 점은 아직 리눅스에 대한 공부나 코딩이 부족하기에 다음번엔 충분한 기간을 가지고서 여러 기능을 갖춘 재밌는 프로그램을 만들어보고싶다.<br/>
