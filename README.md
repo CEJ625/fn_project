@@ -7,7 +7,8 @@
 #### 1. chat_serv 멀티스레드 명령어
 <img width="469" alt="서버분석2" src="https://user-images.githubusercontent.com/80368992/122089512-cb10bd00-ce41-11eb-9876-571d5f69699d.PNG"><br/>
 서버에게 제공되는 명령어 (도움말, 참가자 수, 채팅 수, 참가자 ip목록, 나가기) 목록이 있음<br/>
-fgets()함수를 통해 스트링을 읽는다 <br/><br/>
+fgets()함수를 통해 스트링을 읽는다 <br/>
+strcmp() 함수를 사용해  읽어들인 문자열과 두 문자열이 같은지 비교할 수 있다.<br/><br/>
 
 #### 2. chat_serv 서버 메인 
 <img width="477" alt="서버분석3" src="https://user-images.githubusercontent.com/80368992/122089807-1aef8400-ce42-11eb-8ec4-a65160917c3c.PNG"><br/>
@@ -16,12 +17,18 @@ buf[MAXLINE + 1] -> 클라이언트에서 받은 메시지<br/>
 fd_set read_fds -> 읽기를 감지할 fd_set 구조체 정의<br/>
 pthread_t a_thread -> 클라이언트 스레드용 구조체 정의<br/>
 argc 인자값이 2개가 아닌경우 서버 사용법을 알려준다 <br/>
-main(int argc, char *argv[]) -> argc는 사용자가 입력한 인자값의 개수, *argv[]는 사용자가 입력한 문자열을 말한다 <br/>
-#### 4. chat_serv 참여자 추가 및 참여자 탈퇴 처리 
-<img width="404" alt="서버분석4" src="https://user-images.githubusercontent.com/80368992/122089816-1d51de00-ce42-11eb-8e71-df7a5f70a5d1.PNG">
+main(int argc, char *argv[]) -> argc는 사용자가 입력한 인자값의 개수, *argv[]는 사용자가 입력한 문자열을 말한다 <br/><br/>이제 클라이언트와 연결하기 위해 소켓을 생성하고 읽어들이는 메서드인 tcp_listen(host, port, backlog)함수를 호출한다.<br/><br/>
+pthread_create -> 스레드를 생성한다 <br/>
+###### pthread_create(&a_thread, null, thread_function,(void *)null) <br/>
+pthread_create(생성되는 스레드의 번호를 받을 변수, 스레드 속성, 스레드가 생성되면서 실행할 변수, 실행할 함수에 들어갈 변수)<br/>
+참여자 수 만큼 for문을 통해 FD_SET()함수로 읽어온 파일스크립터를 채팅에 참가한 참여자를 소켓 목록(clisock_list)에 추가한다 
+#### 3. chat_serv 소켓 생성 및 읽기 
+<img width="416" alt="서버분석5" src="https://user-images.githubusercontent.com/80368992/122089826-1fb43800-ce42-11eb-9750-f5fa6a34d9f4.PNG"><br/>
 
-#### 5. chat_serv 소켓 생성 및 읽기 
-<img width="416" alt="서버분석5" src="https://user-images.githubusercontent.com/80368992/122089826-1fb43800-ce42-11eb-9750-f5fa6a34d9f4.PNG">
+#### 4. chat_serv 참여자 추가 및 참여자 탈퇴 처리 
+<img width="404" alt="서버분석4" src="https://user-images.githubusercontent.com/80368992/122089816-1d51de00-ce42-11eb-8e71-df7a5f70a5d1.PNG"><br/>
+
+
 
 <br/><br/>
 > 클라이언트 코드 설명.
