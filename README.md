@@ -16,7 +16,7 @@
 각자 클라이언트의 대화는 서버 뿐만아니라 모든 클라이언트에게도 전송 가능<br/><br/>
 
 ## 설계<br/>
-<img width="310" alt="서버분석1" src="https://user-images.githubusercontent.com/80368992/122233395-fd302680-cef6-11eb-97f3-d789f3880cfa.jpg"><br/><br/>
+<img width="310" alt="서버분석1" src="https://user-images.githubusercontent.com/80368992/122233395-fd302680-cef6-11eb-97f3-d789f3880cfa.jpg"><br/><br/><br/>
 
 > 서버 코드 설명
 
