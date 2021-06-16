@@ -20,7 +20,7 @@ buf[MAXLINE + 1] -> 클라이언트에서 받은 메시지<br/><br/>
 fd_set read_fds -> 읽기를 감지할 fd_set 구조체 정의, fd_set read_fds ; 와 같이 선언만 하고 안에 배열값을 찍어보면 쓰레기값이 있을 수 있다. 따라서 구조체를 초기화 해야 하며 밑에서 해줄 것이다. <br/> 
 pthread_t a_thread -> 클라이언트 스레드용 구조체 정의<br/><br/>
 argc 인자값이 2개가 아닌경우 서버 사용법을 알려준다 <br/>
-main(int argc, char *argv[]) -> argc는 사용자가 입력한 인자값의 개수, *argv[]는 사용자가 입력한 문자열을 말한다 <br/><br/>이제 클라이언트와 연결하기 위해 소켓을 생성하고 읽어들이는 메서드인 tcp_listen(host, port, backlog)함수를 호출한다.[tct_listen함수](https://user-images.githubusercontent.com/80368992/122089826-1fb43800-ce42-11eb-9750-f5fa6a34d9f4.PNG)<br/>호출하고 반환된 소켓 값을 listen_Sock에 저장한다. <br/><br/>
+main(int argc, char *argv[]) -> argc는 사용자가 입력한 인자값의 개수, *argv[]는 사용자가 입력한 문자열을 말한다 <br/><br/>이제 클라이언트와 연결하기 위해 소켓을 생성하고 읽어들이는 메서드인 tcp_listen(host, port, backlog)함수를 호출한다. [tct_listen함수](https://user-images.githubusercontent.com/80368992/122089826-1fb43800-ce42-11eb-9750-f5fa6a34d9f4.PNG)<br/>호출하고 반환된 소켓 값을 listen_Sock에 저장한다. <br/><br/>
 pthread_create -> 스레드를 생성한다 <br/>
 #### pthread_create(&a_thread, null, thread_function,(void *)null) <br/>
 pthread_create(생성되는 스레드의 번호를 받을 변수, 스레드 속성, 스레드가 생성되면서 실행할 변수, 실행할 함수에 들어갈 변수)<br/><br/>
