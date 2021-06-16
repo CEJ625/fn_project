@@ -20,7 +20,7 @@ buf[MAXLINE + 1] -> 클라이언트에서 받은 메시지<br/><br/>
 fd_set read_fds -> 읽기를 감지할 fd_set 구조체 정의, fd_set read_fds ; 와 같이 선언만 하고 안에 배열값을 찍어보면 쓰레기값이 있을 수 있다. 따라서 구조체를 초기화 해야 하며 밑에서 해줄 것이다. <br/> 
 pthread_t a_thread -> 클라이언트 스레드용 구조체 정의<br/><br/>
 argc 인자값이 2개가 아닌경우 서버 사용법을 알려준다 <br/>
-main(int argc, char *argv[]) -> argc는 사용자가 입력한 인자값의 개수, *argv[]는 사용자가 입력한 문자열을 말한다 <br/><br/>이제 클라이언트와 연결하기 위해 소켓을 생성하고 읽어들이는 메서드인 tcp_listen(host, port, backlog)함수를 호출한다. [tct_listen함수](https://user-images.githubusercontent.com/80368992/122089826-1fb43800-ce42-11eb-9750-f5fa6a34d9f4.PNG)<br/>호출하고 반환된 소켓 값을 listen_Sock에 저장한다. <br/><br/>
+main(int argc, char *argv[]) -> argc는 사용자가 입력한 인자값의 개수, *argv[]는 사용자가 입력한 문자열을 말한다 <br/><br/>이제 클라이언트와 연결하기 위해 소켓을 생성하고 읽어들이는 메서드인 tcp_listen(host, port, backlog)함수를 호출한다. [tct_listen 함수](https://user-images.githubusercontent.com/80368992/122089826-1fb43800-ce42-11eb-9750-f5fa6a34d9f4.PNG)<br/>호출하고 반환된 소켓 값을 listen_Sock에 저장한다. <br/><br/>
 pthread_create -> 스레드를 생성한다 <br/>
 * pthread_create(&a_thread, null, thread_function,(void *)null) <br/>
 pthread_create(생성되는 스레드의 번호를 받을 변수, 스레드 속성, 스레드가 생성되면서 실행할 변수, 실행할 함수에 들어갈 변수)<br/><br/>
@@ -32,15 +32,31 @@ FD_ZERO()함수로 read_fds의 메모리를 모두 초기화한다<br/>
 FD_SET() 함수로 읽어들인 파일 디스크립터 중 listen_sock에 해당하는 비트를 1로 하고<br/>
 
 참여자 수 만큼 for문을 통해 FD_SET()함수로 읽어온 파일 스크립터 주소를 채팅에 참가한 참여자를 소켓 목록(clisock_list)에 추가한다<br/>
-관리하는 파일의 최대 개수(max_fdp)는 채팅 하는 동안 계속 재 계산된다. 파일의 개수는 최대 파일 지정 번호 + 1로 지정함 <br/> 
-!!!!!!!!이부분 좀 설명 미흡함 <br/> 
+관리하는 파일의 최대 개수(max_fdp)는 채팅 하는 동안 계속 재 계산된다 [소켓 번호 최대 찾기 함수](https://user-images.githubusercontent.com/80368992/122089826-1fb43800-ce42-11eb-9750-f5fa6a34d9f4.PNG). 파일의 개수는 최대 파일 지정 번호 + 1로 지정함 <br/> 
 select()함수로 변화가 있는 파일 디스크립터는 반환한다. <br/>만약 최대 파일 디스크립터 범위내에 검색한 fd가 0이하(변화 없음)라면 select에 실패한것이다 <br/>
-만약 FD_ISSET(listen_sock, &read_fds) -> 읽어온 파일 디스크립터 중 소켓 listen_sock에 해당하는 비트가 set되어 있으면 해당 listen_sock을 반환한다 <br/>
+만약 FD_ISSET(listen_sock, &read_fds) -> fd_set으로 선언된 read_fds에 listen_sock 연결된 소켓 값이 설정되어 있는지 확인 한다.<br/>
+* accpet(소켓, 주소정보 구조체 주소, 주소 정보 구조체 크기를 담을 변수 구조) => 아직 처리되지 않은 연결들이 대기하고 있는 큐에서 제일 처음 연결된 연결을 가져와서 새로운 연결된 소켓을 만든다. 그리고 소켓을 가르키는 파일 지정자를 할당하고 이것을 리턴<br/>
+accpet() 함수를 통해 소켓으로 부터 연결을 연결을 받아들여 받아들인 소켓 디스크립터를 accp_sock에 저장한다.<br/>
+accp_sock이 -1이면 연결실패 아니라면 연결 성공 
+연결이 성공되면 add_Client() 함수(연결이 성공한 참가자를 처리함)를 [add_Client 함수](https://user-images.githubusercontent.com/80368992/122089816-1d51de00-ce42-11eb-8e71-df7a5f70a5d1.PNG)호출한다 <br/>
+send()함수를 통해 연결된 소켓 디스크립터(참여자)에게 전송할 데이터(START 문구)를 전송한다.<br/><br/>
 
-#### 3. chat_serv 소켓 생성 및 읽기 
+* time() 이라는 함수의 반환형으로써 time() 함수가 어떠한 기준에 의한 시간데이터를 반환하고 그 시간을 다루기 위해서 사용하는 데이터 타입 즉 1970년 1월 1일 00시 00분(UTC) 부터 지금까지 초단위의 시간을 정수값으로 표현하는 데이터 <br/>
+* tm구조체는 시간을 우리가 알아볼 수 있게 세세하게 변수로 나누어서 만들어져 있는 구조체. <br/>
+* tm_sec, tm_min, tm_hour, tm_mday, tm_mon, tm_year,tm_day등 9개의 변수가 각각 표현하는 값이 다르다.<br/>
+
+사용자에게 환영 메시지를 보낸 후 현재 시각과 참가자 수를 출력한다.<br/>
+
+클라이언트가 보낸 메시지를 모든 클라이언트에게 방송할 때 <br/>
+참여자 수 만큼 for문을 통해 fd_set으로 선언된 read_fds에 clisock_list[i] (말한 참가자의 연결된 소켓 값)이 있는지 검사하고 총 대화수 chat_num을 증가시키고.<br/>
+읽은 데이터를 저장할 버퍼를 nbyte변수에 저장한다.<br/>
+만약 데이터(nbyte)가 없거나 참여자가 "exit"를 입력할 경우 클라이언트의 종료로 받아들이고 remove_Client()함수를 [remove_Client 함수](https://user-images.githubusercontent.com/80368992/122089816-1d51de00-ce42-11eb-8e71-df7a5f70a5d1.PNG) 호출하여 참여자를 탈퇴처리 한다.아니라면 모든 채팅 참여자에게 메시지를 방송한다.<br/><br/>
+
+
+#### 3. chat_serv 소켓 번호 최대 찾기 & 소켓 생성 및 읽기 
 <img width="416" alt="서버분석5" src="https://user-images.githubusercontent.com/80368992/122089826-1fb43800-ce42-11eb-9750-f5fa6a34d9f4.PNG"><br/>
 
-#### 4. chat_serv 참여자 추가 및 참여자 탈퇴 처리 
+#### 4. chat_serv 새로운 참가자 처리 & 참가자 탈퇴 처리 
 <img width="404" alt="서버분석4" src="https://user-images.githubusercontent.com/80368992/122089816-1d51de00-ce42-11eb-8e71-df7a5f70a5d1.PNG"><br/>
 
 
