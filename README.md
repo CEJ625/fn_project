@@ -104,7 +104,7 @@ user_num증가 됨<br/>
 <br/><br/>
 > 클라이언트 코드 설명
 #### 1. chat_clnt 클라이언트 메인 
-<img width="626" alt="클라이언트분석1" src="https://user-images.githubusercontent.com/80368992/122090541-d3b5c300-ce42-11eb-98c8-82ed4b10675e.PNG"><br/>
+<img width="626" alt="클라이언트분석1" src="https://user-images.githubusercontent.com/80368992/122258737-59517580-cf0c-11eb-92f5-f8bfc8313f0b.PNG"><br/>
 main의 인자값이 4개가 아닌경우 사용법을 알려줌 -> ./파일명 IP주소 Port번호 닉네임 <br/>
 사용자의 닉네임을 저장할 변수 : bufname<br/>
 닉네임 길이 : namelen <br/><br/>
