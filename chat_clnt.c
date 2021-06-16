@@ -24,7 +24,7 @@ int main(int argc, char *argv[]) {
 	char bufname[NAME_LEN];	
 	char bufmsg[MAXLINE];	
 	char bufall[MAXLINE + NAME_LEN];
-	int maxfdp1;	
+	int max_fdp;	
 	int s;		
 	int namelen;	
 	fd_set read_fds;
@@ -41,13 +41,13 @@ int main(int argc, char *argv[]) {
 		errquit("tcp_connect fail");
 
 	puts("서버에 접속되었습니다.");
-	maxfdp1 = s + 1;
+	max_fdp = s + 1;
 	FD_ZERO(&read_fds);
 
 	while (1) {
 		FD_SET(0, &read_fds);
 		FD_SET(s, &read_fds);
-		if (select(maxfdp1, &read_fds, NULL, NULL, NULL) < 0)
+		if (select(max_fdp, &read_fds, NULL, NULL, NULL) < 0)
 			errquit("select fail");
 		if (FD_ISSET(s, &read_fds)) {
 			int nbyte;
