@@ -70,4 +70,4 @@ FD_ISSET(listen_sock, &read_fds) -> 읽기 전용 소켓중 소켓 listen_sock�
 <img width="306" alt="서버측참여자들의대화" src="https://user-images.githubusercontent.com/80368992/122092768-458f0c00-ce45-11eb-8e0c-f6a6caa28305.PNG">
 
 
-## 아쉬운 
+<br/><br/><br/>## 아쉬운 
