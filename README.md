@@ -6,7 +6,6 @@
 
 ## 목적
 
-## 코드 설명
 > 서버 
 #### 1. chat_serv 멀티스레드 명령어
 <img width="469" alt="서버분석2" src="https://user-images.githubusercontent.com/80368992/122089512-cb10bd00-ce41-11eb-9876-571d5f69699d.PNG"><br/>
@@ -55,7 +54,6 @@ FD_ISSET(listen_sock, &read_fds) -> 읽기 전용 소켓중 소켓 listen_sock�
 #### 2. chat_clnt 소켓 연결 
 <img width="391" alt="클라이언트분석2" src="https://user-images.githubusercontent.com/80368992/122090556-d57f8680-ce42-11eb-85e7-88214720f6ea.PNG">
 
-## 실행결과
 <br/><br/>
 > 결과
 
