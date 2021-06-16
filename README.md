@@ -6,7 +6,7 @@
 
 ## 목적
 
-> 서버 
+> 서버 코드 설명
 #### 1. chat_serv 멀티스레드 명령어
 <img width="469" alt="서버분석2" src="https://user-images.githubusercontent.com/80368992/122089512-cb10bd00-ce41-11eb-9876-571d5f69699d.PNG"><br/>
 서버에게 제공되는 명령어 (도움말, 참가자 수, 채팅 수, 참가자 ip목록, 나가기) 목록이 있음<br/>
@@ -47,7 +47,7 @@ FD_ISSET(listen_sock, &read_fds) -> 읽기 전용 소켓중 소켓 listen_sock�
 
 
 <br/><br/>
-> 클라이언트
+> 클라이언트 코드 설명
 #### 1. chat_clnt 클라이언트 메인 
 <img width="626" alt="클라이언트분석1" src="https://user-images.githubusercontent.com/80368992/122090541-d3b5c300-ce42-11eb-98c8-82ed4b10675e.PNG">
 
@@ -55,7 +55,7 @@ FD_ISSET(listen_sock, &read_fds) -> 읽기 전용 소켓중 소켓 listen_sock�
 <img width="391" alt="클라이언트분석2" src="https://user-images.githubusercontent.com/80368992/122090556-d57f8680-ce42-11eb-85e7-88214720f6ea.PNG">
 
 <br/><br/>
-> 결과
+> 실행 
 
 #### 1. 클라이언트와 서버 통신 성공 (클라이언트)
 <img width="278" alt="클라이언트사용방법" src="https://user-images.githubusercontent.com/80368992/122092199-9d794300-ce44-11eb-8ddd-cf996f5c0648.PNG">
