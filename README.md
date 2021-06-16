@@ -7,7 +7,11 @@
 ## 목적<br/><br/><br/>
 
 > 서버 코드 설명
-#### 1. chat_serv 멀티스레드 명령어
+
+#### 0. chat_serv 변수
+<img width="310" alt="서버분석1" src="https://user-images.githubusercontent.com/80368992/122088213-7fa9df00-ce40-11eb-8cfc-5e9663cc0ab1.PNG">
+
+#### 1. chat_serv 도우미 명령어
 <img width="469" alt="서버분석2" src="https://user-images.githubusercontent.com/80368992/122089512-cb10bd00-ce41-11eb-9876-571d5f69699d.PNG"><br/>
 서버에게 제공되는 명령어 (도움말, 참가자 수, 채팅 수, 참가자 ip목록, 나가기) 목록이 있음<br/>
 fgets()함수를 통해 스트링을 읽는다 <br/>
@@ -59,6 +63,15 @@ send()함수를 통해 연결된 소켓 디스크립터(참여자)에게 전송�
 #### 4. chat_serv 새로운 참가자 처리 & 참가자 탈퇴 처리 
 <img width="404" alt="서버분석4" src="https://user-images.githubusercontent.com/80368992/122089816-1d51de00-ce42-11eb-8e71-df7a5f70a5d1.PNG"><br/>
 
+* 새로운 참가자 처리
+Inet_ntop -> IP주소 변환, newcliaddr주소를 sin_addr로 바꿔서 buf에 저장 <br/>
+채팅 클라이언트 목록에 연결된 소켓 (참가자) 추가 <br/>
+strcpy() -> 문자열을 복사하는 함수 방금 전 newcliaddr주소(새로운 참여자 주소)가 저장된 buf를 복사하여 ip_list에 추가한다.<br/>
+user_num증가 됨<br/>
+
+* 참가자 탈퇴 처리 
+저장된 리스트를 재배열하여 현재 참가자 목록에서 유저수 -1를 하여 다시 참가자 목록에 변경된 유저 목록을 저장함 <br/>
+변경된 유저 목록을 다시 strcpy()함수를 사용하여 복사한 후 ip_list에 추가한다. <br/><br/><br/>
 
 
 <br/><br/>
