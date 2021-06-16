@@ -57,8 +57,23 @@ send()함수를 통해 연결된 소켓 디스크립터(참여자)에게 전송�
 만약 데이터(nbyte)가 없거나 참여자가 "exit"를 입력할 경우 클라이언트의 종료로 받아들이고 remove_Client()함수를 [remove_Client 함수](https://user-images.githubusercontent.com/80368992/122089816-1d51de00-ce42-11eb-8e71-df7a5f70a5d1.PNG) 호출하여 참여자를 탈퇴처리 한다.아니라면 모든 채팅 참여자에게 메시지를 방송한다.<br/><br/>
 
 
-#### 3. chat_serv 소켓 번호 최대 찾기 & 소켓 생성 및 읽기 
+#### 3. chat_serv 최대 소켓 번호 찾기 & 소켓 생성 및 읽기 
 <img width="416" alt="서버분석5" src="https://user-images.githubusercontent.com/80368992/122089826-1fb43800-ce42-11eb-9750-f5fa6a34d9f4.PNG"><br/>
+* 최대 소켓 번호 찾기
+int max = listen_sock -> 서버가 가장 먼저 읽어온 소켓을 max에 저장 <br/>
+참여자 수 만큼 for문을 돌리며 만약 참여자 소켓 목록이 max보다 크다면 max에 참여자 소켓 목록을 저장한 후 max값을 반환하여 max(새롭게 참여자가 추가된 소켓 목록이 저장된) 값에 +1 한 값을 max_fdp(최대 소켓 번호)에 저장한다.<br/>
+
+* 소켓 생성 및 읽기
+sockaddr_in 주소 구조체의 servaddr -> 서버 주소 구조체 정의<br/>
+socket() 함수를 통해 소켓 생성 생성된 소켓을 sd에 저장 <br/>
+만약 소켓 생성에 실패한다면 -1을 반환한다 아니면 seraddr 구조체의 내용을 세팅한다. ( 클라이언트와 연결하기 위한 준비)<br/>
+1. bzero -> 구조체를 0으로 초기화 한다 ( ! memset과 마찬가지로 메모리를 초기화하기위한 목적으로 주로 사용 )<br/>
+2. 서버 주소 체계 (sin_family) = AF_INET -> IPv4 <br/>
+3. 서버 주소 (sin_addr.s_addr = htonl(host))-> Host의 Byte 순서를 Network-Byte-Order(Big Endian)으로 변환<br/>
+4. 서버 포트 (sin_port = htons(port)) -> 포트 번호 데이터를 네트워크 바이트 순서로 변경<br/>
+5. bind() 함수를 이용해 서버와 클라이언트를 바인딩한다. 즉 연결되지 않은 소켓 sockaddr(소켓)에 클라이언트와 연결하기 위해 필요한 정보를 할당한다. <br/>
+6. listen() 함수를 이용해 소켓을 통해 들어오는 클라이언트 연결 요청을 기다리고 연결 성공시 0을, 실패시 -1을 반환한다.<br/><br/>
+
 
 #### 4. chat_serv 새로운 참가자 처리 & 참가자 탈퇴 처리 
 <img width="404" alt="서버분석4" src="https://user-images.githubusercontent.com/80368992/122089816-1d51de00-ce42-11eb-8e71-df7a5f70a5d1.PNG"><br/>
