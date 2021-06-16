@@ -24,7 +24,7 @@ main(int argc, char *argv[]) -> argc는 사용자가 입력한 인자값의 개�
 pthread_create -> 스레드를 생성한다 <br/>
 * pthread_create(&a_thread, null, thread_function,(void *)null) <br/>
 pthread_create(생성되는 스레드의 번호를 받을 변수, 스레드 속성, 스레드가 생성되면서 실행할 변수, 실행할 함수에 들어갈 변수)<br/><br/>
-* FD_ZERO, FD_SET 함수는 둘다 자신이 체크하고 싶은 소켓을 그룹에 포함시킨 후에 select 함수를 사용해야 한다.<br/><br/> 
+* FD_ZERO, FD_SET 함수는 둘다 자신이 체크하고 싶은 소켓을 그룹에 포함시킨 후에 select 함수를 사용해야 한다.<br/> 
 * fd_set은 파일 디스크립터 번호를 배열로 가지는 '비트 필드'구조체이다. <br/>
 * select()는 입출력 다중화 구현이 가능하며 지정한 범위의 fd중 FD_SET으로 1로 set되어 있는 파일을 순회하면서 변화가 있는 fd를 반환한다. <br/>
 
